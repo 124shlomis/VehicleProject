@@ -29,15 +29,24 @@ void Vehicle::setDelta(float delta) {
 
 float *Vehicle::globalToEgo(float xGlobal, float yGlobal) const {
     auto * xyEgo = new float[2];
-    float xEgo = 0;
-    float yEgo = 0;
     float xTmp = xGlobal - x_; // Translation.
     float yTmp = yGlobal - y_; // Translation.
-    xEgo = cos(psi_) * xTmp + sin(psi_) * yTmp; // Rotation
-    yEgo = -sin(psi_) * xTmp + cos(psi_) * yTmp; // Rotation
+    float xEgo = cos(psi_) * xTmp + sin(psi_) * yTmp; // Rotation
+    float yEgo = -sin(psi_) * xTmp + cos(psi_) * yTmp; // Rotation
     xyEgo[0] = xEgo;
     xyEgo[1] = yEgo;
     return xyEgo;
+}
+
+float *Vehicle::egoToGlobal(float xEgo, float yEgo) const {
+    auto * xyGlobal = new float[2];
+    float xTmp = cos(psi_) * xEgo - sin(psi_) * yEgo; // Rotation
+    float yTmp = sin(psi_) * xEgo + cos(psi_) * yEgo; // Rotation
+    float xGlobal = x_ + xTmp; // Translation.
+    float yGlobal = y_ + yTmp; // Translation.
+    xyGlobal[0] = xGlobal;
+    xyGlobal[1] = yGlobal;
+    return xyGlobal;
 }
 
 void Vehicle::setPose(float x, float y, float psi) {
@@ -45,3 +54,5 @@ void Vehicle::setPose(float x, float y, float psi) {
     y_ = y;
     psi_ = psi;
 }
+
+

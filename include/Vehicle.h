@@ -13,6 +13,7 @@ public:
     void setDelta(float delta);
     float * getPose() const;
     float * globalToEgo(float xGlobal,float yGlobal) const;
+    float * egoToGlobal(float xEgo, float yEgo) const;
 private:
     float x_=0;
     float y_=0;

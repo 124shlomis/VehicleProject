@@ -20,9 +20,18 @@ int main(int argc, char **argv) {
     float* testPose = Ford.getPose();
     cout << "test getPose method, x = " << testPose[0] << ", y = " << testPose[1] << ", psi = " << testPose[2] <<  endl; // test getPose
     delete testPose;
-    Ford.setPose(0,0,3.14/4);
+    Ford.setPose(0,0,M_PI/4);
     float* testEgoXY = Ford.globalToEgo(15,15);
     cout << "test globalToEgo method, xEgo = " << testEgoXY[0] << ", yEgo = " << testEgoXY[1]  << endl; // test globalToEgo
     delete testEgoXY;
+    Ford.setPose(-1,1,-M_PI/4);
+    float* pose = Ford.getPose();
+    cout << "test getPose method, xGlobal = " << pose[0] << ", yGlobal = " << pose[1]  << ", psi = " << pose[2] << endl; // test egoToGlobal
+    float* testGlobalXY = Ford.egoToGlobal(sqrtf(2),0);
+    cout << "test egoToGlobal method, xGlobal = " << testGlobalXY[0] << ", yGlobal = " << testGlobalXY[1]  << endl; // test egoToGlobal
+    delete testGlobalXY;
+    delete pose;
+
+
     return 0;
 }
