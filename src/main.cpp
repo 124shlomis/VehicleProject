@@ -17,8 +17,6 @@ int main(int argc, char **argv) {
     float psi = stof(argv[6]);
     float v = stof(argv[8]);
 
-    cout << "Hello, World!" << argv[1] << endl;
-    /*
     Vehicle Ford(x0,y0,psi,v);
     float* testPose = Ford.getPose();
     cout << "test getPose method, x = " << testPose[0] << ", y = " << testPose[1] << ", psi = " << testPose[2] <<  endl; // test getPose
@@ -33,20 +31,15 @@ int main(int argc, char **argv) {
     float* testGlobalXY = Ford.egoToGlobal(sqrtf(2),0);
     cout << "test egoToGlobal method, xGlobal = " << testGlobalXY[0] << ", yGlobal = " << testGlobalXY[1]  << endl; // test egoToGlobal
     delete testGlobalXY;
-    delete pose;*/
-    ofstream pathFile;
-    pathFile.open("pathPoints.txt");
+    delete pose;
+
     Path wayToHeaven;
-    auto* startPtrX = wayToHeaven.getPathX();
-    auto* startPtrY = wayToHeaven.getPathY();
-    for (int i = 0; i < wayToHeaven.getPathNumPoints() ; ++i) {
-        pathFile << *startPtrX << " " << *startPtrY << endl;
-        startPtrX++;
-        startPtrY++;
-    }
-    pathFile.close();
-
-
+    float* xyTest = wayToHeaven.pathToGlobal(5000,-10);
+    cout << "stToXyTest : " << xyTest[0] << ", " << xyTest[1] << endl;
+    delete xyTest;
+    float* stTest = wayToHeaven.globalToPath(1,0.5);
+    cout << "xyToStTest : " << stTest[0] << ", " << stTest[1] << endl;
+    delete stTest;
 
     return 0;
 }

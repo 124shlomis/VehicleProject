@@ -13,12 +13,15 @@ public:
     float* getPathX() const;
     float* getPathY() const;
     int getPathNumPoints() const;
+    float* pathToGlobal(float s, float t) const;
+    float* globalToPath(float x, float y) const;
 
 private:
     float ds_ = 0; // distance between waypoints in meters.
     int nPoints_ = 0; // number of points
-    float* xGlobalPath_= nullptr; // x coordinates
-    float* yGlobalPath_= nullptr; // x coordinates
+    float pathLength_ = 0; // path length
+    float* xGlobalPath_; // x coordinates
+    float* yGlobalPath_; // y coordinates
 };
 
 
