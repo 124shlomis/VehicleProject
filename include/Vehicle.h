@@ -14,13 +14,19 @@ public:
     float * getPose() const;
     float * globalToEgo(float xGlobal,float yGlobal) const;
     float * egoToGlobal(float xEgo, float yEgo) const;
+    void calcVehicleKinematics();
 private:
-    float x_=0;
-    float y_=0;
-    float psi_=0;
-    float v_=0;
-    float psiDot_=0;
-    float delta_=0;
+    float x_=0; // [m]
+    float y_=0; // [m]
+    float psi_=0; // [rad]
+    float v_=0; // [m/s]
+    float psiDot_=0; // [rad/s]
+    float delta_=0; // [rad]
+    const float wheelBase_= 2.728; // [m]
+    const float dt_ = 0.001; // [s] integration step size.
+    void calcXKinematics();
+    void calcYKinematics();
+    void calcPsiKinematics();
 };
 
 

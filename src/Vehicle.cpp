@@ -55,4 +55,28 @@ void Vehicle::setPose(float x, float y, float psi) {
     psi_ = psi;
 }
 
+void Vehicle::calcXKinematics() {
+    float x0 = x_;
+    float xDot = v_ * cos(psi_);
+    x_ = x0 + xDot * dt_;
+}
+
+void Vehicle::calcYKinematics() {
+    float y0 = y_;
+    float yDot = v_ * sin(psi_);
+    y_ = y0 + yDot * dt_;
+}
+
+void Vehicle::calcPsiKinematics() {
+    float psi0 = psi_;
+    float psiDot = v_ * tan(delta_) / wheelBase_;
+    psi_ = psiDot * dt_;
+}
+
+void Vehicle::calcVehicleKinematics() {
+    calcXKinematics();
+    calcYKinematics();
+    calcPsiKinematics();
+}
+
 
