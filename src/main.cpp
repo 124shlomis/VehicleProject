@@ -1,8 +1,8 @@
 #include <iostream>
+#include <fstream>
 
 #include "Vehicle.h"
 #include "Path.h"
-#include <fstream>
 
 using namespace std;
 
@@ -18,6 +18,12 @@ int main(int argc, char **argv) {
     float v = stof(argv[8]);
 
     Vehicle Ford(x0,y0,psi,v);
+    Ford.setDelta(0.1);
+    for (int i = 1; i < 1000; ++i) {
+        Ford.setDelta((float)(0.1));
+        cout << Ford.getDelta() << " , i = " << i << endl;
+    }
+    cout << endl;
     float* testPose = Ford.getPose();
     cout << "test getPose method, x = " << testPose[0] << ", y = " << testPose[1] << ", psi = " << testPose[2] <<  endl; // test getPose
     delete testPose;
@@ -40,6 +46,8 @@ int main(int argc, char **argv) {
     float* stTest = wayToHeaven.globalToPath(1,0.5);
     cout << "xyToStTest : " << stTest[0] << ", " << stTest[1] << endl;
     delete stTest;
+
+
 
     return 0;
 }

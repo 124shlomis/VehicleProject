@@ -6,11 +6,14 @@
 #define VEHICLEPROJECT_VEHICLE_H
 
 
+#include "Steering.h"
+
 class Vehicle {
 public:
     Vehicle(float x0, float y0, float psi, float v); // constructor
     void setPose(float x,float y, float psi);
     void setDelta(float delta);
+    float getDelta() const;
     float * getPose() const;
     float * globalToEgo(float xGlobal,float yGlobal) const;
     float * egoToGlobal(float xEgo, float yEgo) const;
@@ -21,9 +24,8 @@ private:
     float psi_=0; // [rad]
     float v_=0; // [m/s]
     float psiDot_=0; // [rad/s]
-    float delta_=0; // [rad]
     const float wheelBase_= 2.728; // [m]
-    const float dt_ = 0.001; // [s] integration step size.
+    Steering Steer;
     void calcXKinematics();
     void calcYKinematics();
     void calcPsiKinematics();

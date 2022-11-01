@@ -4,7 +4,7 @@
 
 #include <cmath>
 #include "../include/Vehicle.h"
-
+#include "../include/defines.h"
 
 Vehicle::Vehicle(float x0, float y0, float psi, float v) {
     x_ = x0;
@@ -12,7 +12,6 @@ Vehicle::Vehicle(float x0, float y0, float psi, float v) {
     psi_ = psi;
     v_ = v;
     psiDot_ = 0;
-    delta_ = 0;
 }
 
 float* Vehicle::getPose() const {
@@ -24,7 +23,7 @@ float* Vehicle::getPose() const {
 }
 
 void Vehicle::setDelta(float delta) {
-    delta_ = delta;
+    this->Steer.calcSteeringDynamics(delta);
 }
 
 float *Vehicle::globalToEgo(float xGlobal, float yGlobal) const {
@@ -56,27 +55,28 @@ void Vehicle::setPose(float x, float y, float psi) {
 }
 
 void Vehicle::calcXKinematics() {
-    float x0 = x_;
     float xDot = v_ * cos(psi_);
-    x_ = x0 + xDot * dt_;
+    x_ += xDot * DT;
 }
 
 void Vehicle::calcYKinematics() {
-    float y0 = y_;
     float yDot = v_ * sin(psi_);
-    y_ = y0 + yDot * dt_;
+    y_ += yDot * DT;
 }
 
 void Vehicle::calcPsiKinematics() {
-    float psi0 = psi_;
-    float psiDot = v_ * tan(delta_) / wheelBase_;
-    psi_ = psiDot * dt_;
+    float psiDot = v_ * tan(Steer.getCurrentDelta()) / wheelBase_;
+    psi_ += psiDot * DT;
 }
 
 void Vehicle::calcVehicleKinematics() {
     calcXKinematics();
     calcYKinematics();
     calcPsiKinematics();
+}
+
+float Vehicle::getDelta() const{
+    return this->Steer.getCurrentDelta();
 }
 
 
