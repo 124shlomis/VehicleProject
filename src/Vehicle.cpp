@@ -5,7 +5,7 @@
 #include <cmath>
 #include "../include/Vehicle.h"
 #include "../include/defines.h"
-#include "Path.h"
+#include "../include/Path.h"
 
 Vehicle::Vehicle(float x0, float y0, float psi, float v) {
     x_ = x0;

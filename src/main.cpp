@@ -1,9 +1,9 @@
 #include <iostream>
 #include <fstream>
 
-#include "Vehicle.h"
-#include "Path.h"
-#include "defines.h"
+#include "../include/Vehicle.h"
+#include "../include/Path.h"
+#include "../include/defines.h"
 
 using namespace std;
 
