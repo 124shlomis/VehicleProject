@@ -5,13 +5,13 @@
 #include <cmath>
 #include "../include/Vehicle.h"
 #include "../include/defines.h"
+#include "Path.h"
 
 Vehicle::Vehicle(float x0, float y0, float psi, float v) {
     x_ = x0;
     y_ = y0;
     psi_ = psi;
     v_ = v;
-    psiDot_ = 0;
 }
 
 float* Vehicle::getPose() const {
@@ -75,8 +75,20 @@ void Vehicle::calcVehicleKinematics() {
     calcPsiKinematics();
 }
 
-float Vehicle::getDelta() const{
-    return this->Steer.getCurrentDelta();
+float Vehicle::calcRefDelta(float currentS) const {
+    // Calculate Steering angle delta:
+    // First Step: get the reference waypoint
+    Path AuxPath;
+    float refS = currentS + lookAheadDistance_;
+    if (refS > AuxPath.getPathLength()){
+        refS = AuxPath.getPathLength();
+    }
+    float* refXY = AuxPath.pathToGlobal(refS,0);
+    // Calculate alpha
+    float* refXYEgo = globalToEgo(refXY[0], refXY[1]);
+    float alpha = atan2(refXYEgo[1], refXYEgo[0]);
+    float refDelta = atan(2 * wheelBase_ * sin(alpha) / lookAheadDistance_);
+    delete refXY;
+    delete refXYEgo;
+    return refDelta;
 }
-
-
