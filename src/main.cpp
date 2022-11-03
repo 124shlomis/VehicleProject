@@ -12,6 +12,7 @@ int main(int argc, char **argv) {
         cout << "Error number of arguments. please try again" << endl;
         return  -1;
     }
+    cout << "Simulation Started, Please Wait..." << endl;
     // Get I.C:
     float x0 = stof(argv[2]);
     float y0 = stof(argv[4]);
