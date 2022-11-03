@@ -3,6 +3,7 @@
 
 #include "Vehicle.h"
 #include "Path.h"
+#include "defines.h"
 
 using namespace std;
 
@@ -17,37 +18,60 @@ int main(int argc, char **argv) {
     float psi = stof(argv[6]);
     float v = stof(argv[8]);
 
+    // Construct relevant classes:
     Vehicle Ford(x0,y0,psi,v);
-    Ford.setDelta(0.1);
-    for (int i = 1; i < 1000; ++i) {
-        Ford.setDelta((float)(0.1));
-        cout << Ford.getDelta() << " , i = " << i << endl;
+    Path stateRoute1;
+    // Move path to txt file for plot:
+    ofstream txtFile;
+    txtFile.open("pathPoints.txt");
+    auto* startPtrX = stateRoute1.getPathX();
+    auto* startPtrY = stateRoute1.getPathY();
+    for (int i = 0; i < stateRoute1.getPathNumPoints() ; ++i) {
+        txtFile << *startPtrX << " " << *startPtrY << endl;
+        startPtrX++;
+        startPtrY++;
     }
-    cout << endl;
-    float* testPose = Ford.getPose();
-    cout << "test getPose method, x = " << testPose[0] << ", y = " << testPose[1] << ", psi = " << testPose[2] <<  endl; // test getPose
-    delete testPose;
-    Ford.setPose(0,0,M_PI/4);
-    float* testEgoXY = Ford.globalToEgo(15,15);
-    cout << "test globalToEgo method, xEgo = " << testEgoXY[0] << ", yEgo = " << testEgoXY[1]  << endl; // test globalToEgo
-    delete testEgoXY;
-    Ford.setPose(-1,1,-M_PI/4);
-    float* pose = Ford.getPose();
-    cout << "test getPose method, xGlobal = " << pose[0] << ", yGlobal = " << pose[1]  << ", psi = " << pose[2] << endl; // test egoToGlobal
-    float* testGlobalXY = Ford.egoToGlobal(sqrtf(2),0);
-    cout << "test egoToGlobal method, xGlobal = " << testGlobalXY[0] << ", yGlobal = " << testGlobalXY[1]  << endl; // test egoToGlobal
-    delete testGlobalXY;
-    delete pose;
+    txtFile.close();
 
-    Path wayToHeaven;
-    float* xyTest = wayToHeaven.pathToGlobal(5000,-10);
-    cout << "stToXyTest : " << xyTest[0] << ", " << xyTest[1] << endl;
-    delete xyTest;
-    float* stTest = wayToHeaven.globalToPath(1,0.5);
-    cout << "xyToStTest : " << stTest[0] << ", " << stTest[1] << endl;
-    delete stTest;
+    double t = 0; // initialize time;
+    float* initialST = stateRoute1.globalToPath(x0,y0); // initialize current s coordinate
+    float currentS = initialST[0];
+    delete initialST;
+    float refDelta;
+    int writeCounter = 0;
+    bool writeToTxtFile = true;
+    txtFile.open("VehiclePosition.txt"); // file for vehicle position
 
+    // Main loop:
+    while ((t < T_FINAL) && (currentS < stateRoute1.getPathLength()) ){
+        float* vehiclePose = Ford.getPose();
+        float* currentST = stateRoute1.globalToPath(vehiclePose[0],vehiclePose[1]);
+        currentS = currentST[0];
+        refDelta = Ford.calcRefDelta(currentS); // calculate steering angle according to pure pursuit algorithm
+        Ford.setDelta(refDelta); // steering dynamics
+        Ford.calcVehicleKinematics(); // calculate vehicle kinematics
 
+        // write vehicle position to a txt file every 0.1 [s]:
+        if (writeCounter > 100){
+            writeToTxtFile = true;
+        }
+        if (writeToTxtFile) {
+            txtFile << vehiclePose[0] << " " << vehiclePose[1] << " " << t << endl;
+            writeCounter = 0;
+            writeToTxtFile = false;
+        }
+        writeCounter++;
 
+        t += DT; // increase time
+        delete vehiclePose; // free allocated memory
+        delete currentST;
+    }
+
+    // case start simulation over final position:
+    if (currentS >= stateRoute1.getPathLength() & t == 0 )  {
+        txtFile << x0 << " " << y0 << " " << t << endl;
+    }
+    txtFile.close();
+    cout << "Simulation Finished" << endl;
     return 0;
 }
