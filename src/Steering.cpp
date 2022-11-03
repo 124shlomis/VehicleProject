@@ -22,7 +22,7 @@ Steering::~Steering() {
 }
 
 void Steering::calcDelayedCmd(float deltaDes) {
-    for (int i = 0; i < arrayLength_; ++i) {
+    for (int i = 0; i < arrayLength_ - 1; ++i) {
         delayArray_[i] = delayArray_[i+1];
     }
     delayArray_[arrayLength_-1] = deltaDes;
