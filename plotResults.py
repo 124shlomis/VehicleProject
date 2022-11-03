@@ -1,10 +1,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
-data = np.loadtxt('cmake-build-debug/pathPoints.txt')
+data = np.loadtxt('./pathPoints.txt')
 x = data[:, 0]
 y = data[:, 1]
 plt.plot(x, y, 'r.')
-data = np.loadtxt('cmake-build-debug/VehiclePosition.txt')
+data = np.loadtxt('./VehiclePosition.txt')
 if data.ndim == 1:
     x = data[0]
     y = data[1]

@@ -69,7 +69,7 @@ int main(int argc, char **argv) {
     }
 
     // case start simulation over final position:
-    if (currentS >= stateRoute1.getPathLength() & t == 0 )  {
+    if ((currentS >= stateRoute1.getPathLength()) & (t == 0) )  {
         txtFile << x0 << " " << y0 << " " << t << endl;
     }
     txtFile.close();
