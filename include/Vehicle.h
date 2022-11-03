@@ -25,7 +25,7 @@ private:
     float v_=0; // [m/s]
     const float wheelBase_= 2.728; // [m]
     Steering Steer;
-    float lookAheadDistance_= 7; // [m]
+    float lookAheadDistance_= 20; // [m]
     void calcXKinematics();
     void calcYKinematics();
     void calcPsiKinematics();
