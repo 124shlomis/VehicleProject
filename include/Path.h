@@ -13,6 +13,7 @@ public:
     float* getPathX() const;
     float* getPathY() const;
     int getPathNumPoints() const;
+    float getPathLength() const;
     float* pathToGlobal(float s, float t) const;
     float* globalToPath(float x, float y) const;
 

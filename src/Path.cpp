@@ -7,7 +7,7 @@
 
 Path::Path() { // Path instructor - built from 3 segments: 2 straight lines and a radius.
     ds_ = 1;
-    nPoints_ = 10000;
+    nPoints_ = 6000;
     pathLength_ = ds_ * float(nPoints_ - 1);
     xGlobalPath_ = new float[nPoints_]{0.0};
     yGlobalPath_ = new float[nPoints_]{0.0};
@@ -74,8 +74,7 @@ float *Path::pathToGlobal(float s, float t) const {
         yTmp = yGlobalPath_[nPoints_-1];
         xDir = xTmp - xGlobalPath_[nPoints_-2];
         yDir = yTmp - yGlobalPath_[nPoints_-2];
-    }
-    else if (s == 0){
+    } else if (abs(s) < 0.00000001){
         xTmp = xGlobalPath_[0];
         yTmp = yGlobalPath_[0];
         xDir = xGlobalPath_[1] - xTmp;
@@ -160,4 +159,8 @@ float *Path::globalToPath(float x, float y) const {
     stPath[0] = s;
     stPath[1] = t;
     return stPath;
+}
+
+float Path::getPathLength() const{
+    return pathLength_ - ds_;
 }
