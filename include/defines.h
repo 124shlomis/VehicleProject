@@ -9,4 +9,5 @@
     #define DELTA_DOT_MIN      float(-20 * M_PI/180)
     #define DELTA_MAX          float(45 * M_PI/180)
     #define DELTA_MIN          float(-45 * M_PI/180)
+    #define T_FINAL            300 // [s]
 #endif //VEHICLEPROJECT_DEFINES_H
