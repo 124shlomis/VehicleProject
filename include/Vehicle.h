@@ -14,6 +14,7 @@ public:
     void setPose(float x,float y, float psi);
     void setDelta(float delta);
     float * getPose() const;
+    float getDelta();
     float * globalToEgo(float xGlobal,float yGlobal) const;
     float * egoToGlobal(float xEgo, float yEgo) const;
     void calcVehicleKinematics();

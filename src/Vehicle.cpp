@@ -92,3 +92,7 @@ float Vehicle::calcRefDelta(float currentS) const {
     delete refXYEgo;
     return refDelta;
 }
+
+float Vehicle::getDelta() {
+    return this->Steer.getCurrentDelta();
+}
