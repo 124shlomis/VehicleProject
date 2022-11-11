@@ -7,12 +7,12 @@
 
 Steering::Steering() {
     timeDelay_ = 0.2; // [s]
-    arrayLength_ = (unsigned int)(timeDelay_ / DT)+2;
+    arrayLength_ = (unsigned int)(timeDelay_ / DT)+1;
     delayArray_ = new float [arrayLength_];
     for (unsigned int i = 0; i < arrayLength_ ; ++i) {
         delayArray_[i] = 0;
     }
-    deltaCmdDelayed_ = &delayArray_[1]; // pointer to the first element in array
+    deltaCmdDelayed_ = &delayArray_[0]; // pointer to the first element in array
     zeta_ = 1;
     wn_ = 2 * M_PI * 10; // [rad]
 }
