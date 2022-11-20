@@ -7,7 +7,7 @@ This project is a simulation of vehicle kinematics model (Bicycle Model). The ve
 1. Build the program with `make all` command.
 2. Run the program with `./VehicleProject -x0 <x0> -y0 <y0> -psi <psi> -v <v>`. `x0, y0, psi` is the initial pose of the vehicle and `v` is a constant velocity of the vehicle. The simulation takes some time, please be patient.
 3. The program generates 2 txt files: **a)** pathPoints.txt is the reference path for the vehicle. **b)** VehiclePosition.txt is the vehicle positions during simulation.
-4. Run the python script - plotResult.py with the command `python3 plotResult.py`.
+4. Run the python script - plotResults.py with the command `python3 plotResults.py`.
 
 ## Examples
 1. Simulation result's plot of `./VehicleProject -x0 0 -y0 0 -psi 0 -v 5`:
